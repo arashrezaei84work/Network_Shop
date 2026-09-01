@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}سبد خرید و آدرس{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --accent-color: #2563eb;
+        --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        --card-bg: rgba(255, 255, 255, 0.9);
+        --text-dark: #1e293b;
+        --text-gray: #64748b;
+        --shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    body { background: var(--bg-gradient); }
+
+    .cart-wrapper {
+        display: flex; gap: 30px; margin: 40px auto; flex-wrap: wrap;
+    }
+
+    .cart-main { flex: 2; min-width: 320px; }
+    
+    /* کارت کالا با قابلیت کنترل تعداد */
+    .cart-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #fff;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .cart-img-box {
+        width: 100px; height: 100px; background: #fff;
+        border-radius: 15px; padding: 10px; border: 1px solid #f1f5f9;
+    }
+
+    /* سیستم کنترل تعداد */
+    .qty-box {
+        display: flex; align-items: center; background: #f1f5f9; 
+        border-radius: 10px; padding: 5px; width: fit-content; margin-top: 10px;
+    }
+    .qty-btn {
+        width: 28px; height: 28px; border: none; background: #fff;
+        border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s;
+    }
+    .qty-btn:hover { background: var(--accent-color); color: #fff; }
+    .qty-val { margin: 0 12px; font-weight: 800; color: var(--text-dark); }
+
+    /* بخش آدرس */
+    .address-section {
+        background: var(--card-bg); backdrop-filter: blur(10px);
+        border-radius: 20px; padding: 25px; margin-top: 30px;
+        border: 1px solid #fff; box-shadow: var(--shadow);
+    }
+    .address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+    .modern-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; outline: none; }
+
+    /* خلاصه فاکتور */
+    .cart-summary { flex: 0.8; min-width: 300px; }
+    .summary-card {
+        background: #fff; border-radius: 25px; padding: 30px;
+        border: 1px solid #e2e8f0; position: sticky; top: 20px; box-shadow: var(--shadow);
+    }
+    .shipping-info { font-size: 11px; color: #ef4444; margin-top: 5px; display: block; }
+
+    .checkout-btn {
+        background: var(--accent-color); color: #fff; border: none; width: 100%;
+        padding: 18px; border-radius: 15px; font-weight: 800; cursor: pointer; margin-top: 20px;
+    }
+
+    .qty-wrapper {
+        display: grid;
+        grid-template-columns: 36px 32px 36px;
+        align-items: center;
+        justify-content: center;
+
+        background: #f6f7f9;
+        border-radius: 14px;
+        padding: 6px;
+    }
+
+    .qty-btn {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #fff;
+        border-radius: 10px;
+
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        text-decoration: none;
+
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        transition: all 0.2s ease;
+    }
+
+    .qty-btn:hover {
+        background: #0d6efd;
+        color: #fff;
+    }
+
+    .qty-number {
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        color: #222;
+
+        /* کلیدی‌ترین بخش */
+        font-variant-numeric: tabular-nums;
+    }
+
+    .checkout-btn.luxury {
+    width: 100%;
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    background: linear-gradient(135deg, #1d4ed8, #0f172a);
+    color: #fff;
+
+    font-weight: 900;
+    letter-spacing: 0.3px;
+
+    box-shadow:
+        0 12px 30px rgba(29, 78, 216, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* افکت نور عبوری */
+    .checkout-btn.luxury::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent
+        );
+        transition: all 0.6s ease;
+    }
+
+    .checkout-btn.luxury:hover::before {
+        left: 120%;
+    }
+
+    .checkout-btn.luxury:hover {
+        transform: translateY(-3px);
+        box-shadow:
+            0 18px 40px rgba(29, 78, 216, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .checkout-btn.luxury:active {
+        transform: translateY(0);
+        box-shadow: 0 8px 18px rgba(29, 78, 216, 0.3);
+    }
+
+    /* متن‌ها */
+    .btn-icon {
+        font-size: 22px;
+    }
+
+    .btn-text {
+        font-size: 17px;
+    }
+
+    .btn-subtext {
+        font-size: 12px;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        .cart-card { flex-direction: column; text-align: center; }
+        .address-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="container">
+    <div class="cart-wrapper">
+        
+        <div class="cart-main">
+            <h3 style="font-weight: 900; margin-bottom: 20px;">سبد خرید</h3>
+            
+            {% for item in items %}
+            <div class="cart-card">
+                <div class="cart-img-box">
+                    <img src="{{ item.product.image.url }}" style="width:100%">
+                </div>
+
+                <div style="flex:1">
+                    <h4 style="font-weight:800;">{{ item.product.name }}</h4>
+
+                    <div class="qty-wrapper">
+                        <a href="{% url 'shop:increase-item' item.id %}" class="qty-btn plus">+</a>
+
+                        <div class="qty-number">
+                            {{ item.quantity }}
+                        </div>
+
+                        <a href="{% url 'shop:decrease-item' item.id %}" class="qty-btn minus">−</a>
+                    </div>
+
+                </div>
+
+                <div style="text-align:left">
+                    <span style="font-weight:900; color:var(--accent-color);">
+                        {{ item.get_total_price }} ریال
+                    </span>
+                    <br>
+                    <a href="{% url 'shop:remove-from-cart' item.id %}" class="remove-item" style="color:red;">حذف</a>
+               </div>
+            </div>
+            {% empty %}
+            <p>سبد خرید شما خالی است</p>
+            {% endfor %}
+
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-card">
+                <h4 style="font-weight:900; margin-bottom:20px">خلاصه هزینه</h4>
+                
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px; color:var(--text-gray)">
+                    <span>جمع اقلام:</span>
+                    <span>{{ total_price }} ریال</span>
+                </div>
+                
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px; color:var(--text-gray)">
+                    <div>
+                        <span>هزینه ارسال:</span>
+                        <small class="shipping-info">(محاسبه بر اساس وزن)</small>
+                    </div>
+                    <span style="color: var(--text-dark)">۴۵,۰۰۰ ریال</span>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:20px; font-weight:900; font-size:18px; border-top:1px dashed #eee; padding-top:20px">
+                    <span>مبلغ نهایی:</span>
+                    <span style="color:var(--accent-color)">{{ total_price }}  ریال</span>
+                </div>
+
+                <form method="get" action="{% url 'shop:checkout' %}" class="checkout-form">
+                    <button type="submit" class="checkout-btn luxury">
+                        <span class="btn-icon">💳</span>
+                        <span class="btn-text">ثبت نهایی و پرداخت امن</span>
+                        <span class="btn-subtext"> آماده انتقال به درگاه پرداخت</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

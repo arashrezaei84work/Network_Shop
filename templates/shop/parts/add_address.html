@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}آدرس‌های من{% endblock %}
+
+{% block content %}
+<style>
+.address-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.address-form {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.address-form h4 {
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 12px;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #2563eb, #1e293b);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    width: 100%;
+    font-weight: 800;
+}
+</style>
+
+<div class="container" style="max-width:900px">
+
+    <h3 style="font-weight:900;margin-bottom:25px">📍 آدرس‌های من</h3>
+
+    <!-- Add Address -->
+    <form method="post" class="address-form">
+        {% csrf_token %}
+        <h4>افزودن آدرس جدید</h4>
+
+        <input class="input" name="full_name" placeholder="نام و نام خانوادگی" required>
+        <input class="input" name="phone" placeholder="شماره تماس" required>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <input class="input" name="state" placeholder="استان" required>
+            <input class="input" name="city" placeholder="شهر" required>
+        </div>
+
+        <textarea class="input" name="address" placeholder="آدرس کامل پستی" rows="3" required></textarea>
+
+        <button class="btn-save">💾 ذخیره آدرس</button>
+    </form>
+
+    <!-- Address List -->
+    {% for address in addresses %}
+        <div class="address-card">
+            <strong>{{ address.full_name }}</strong>
+            <p style="margin:5px 0;color:#555">
+                {{ address.state }}، {{ address.city }}
+            </p>
+            <p style="color:#64748b">{{ address.address }}</p>
+            <small>📞 {{ address.phone }}</small>
+        </div>
+    {% empty %}
+        <p style="color:gray">هنوز آدرسی ثبت نشده</p>
+    {% endfor %}
+
+</div>
+{% endblock %}

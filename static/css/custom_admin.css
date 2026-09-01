@@ -1,0 +1,30 @@
+/* static/css/admin_custom.css */
+:root {
+    --primary: #2563eb !important;
+}
+
+/* گرد کردن کارت‌ها */
+.card {
+    border-radius: 20px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+    border: none !important;
+}
+
+/* دکمه‌ها */
+.btn {
+    border-radius: 12px !important;
+    padding: 8px 20px !important;
+}
+
+/* هدر جداول */
+.table thead th {
+    background-color: #f8fafc !important;
+    color: #64748b !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+}
+
+/* ورودی‌ها */
+input.form-control, select.form-control {
+    border-radius: 10px !important;
+    padding: 10px !important;
+}

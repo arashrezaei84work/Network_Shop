@@ -1,0 +1,265 @@
+:root {
+  --navy: #0f172a;
+  --navy-light: #1e293b;
+  --blue: #3b82f6;
+  --white: #ffffff;
+  --bg-light: #f1f5f9;
+}
+/* --- RESET & LAYOUT FIX --- */
+html,
+body {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+.admin-body {
+  background-color: #f1f5f9;
+  font-family: "BYekan", Tahoma, sans-serif;
+}
+
+/* ظرف اصلی باید کل صفحه را بپوشاند */
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  margin: 0;
+}
+
+/* اصلاح سایدبار برای چسبیدن به سقف و سمت راست */
+.admin-sidebar {
+  width: 260px;
+  background-color: #0f172a; /* رنگ سرمه‌ای هدر */
+  color: white;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky; /* سایدبار ثابت بماند */
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+}
+
+/* هدر سایدبار بدون هیچ فاصله اضافی */
+.sidebar-header {
+  padding: 20px;
+  text-align: center;
+  background: #020617;
+  font-size: 20px;
+  border-bottom: 1px solid #1e293b;
+}
+
+/* بخش محتوای اصلی */
+.admin-main {
+  flex-grow: 1;
+  background: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* تاپ‌بار (نوار بالا) بدون فاصله از سقف */
+.admin-topbar {
+  background: #ffffff;
+  height: 65px;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-content-inner {
+  padding: 25px;
+  flex-grow: 1;
+}
+
+/* استایل لوگو در پنل */
+.logo-net {
+  color: #fff;
+  font-weight: 900;
+}
+.logo-shop {
+  color: #3b82f6;
+  font-weight: 300;
+}
+
+.admin-body {
+  background-color: var(--bg-light);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Style */
+.admin-sidebar {
+  width: 260px;
+  background-color: var(--navy);
+  color: white;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding: 25px;
+  text-align: center;
+  background: #020617;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.sidebar-nav ul li a {
+  display: block;
+  padding: 15px 25px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.sidebar-nav ul li a i {
+  margin-left: 10px;
+  width: 20px;
+}
+
+.sidebar-nav ul li:hover a,
+.sidebar-nav ul li.active a {
+  background-color: var(--navy-light);
+  color: var(--blue);
+  border-right: 4px solid var(--blue);
+}
+
+.logout-link {
+  margin-top: 50px;
+  border-top: 1px solid #334155;
+}
+
+/* Main Content Style */
+.admin-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  background: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.admin-content-inner {
+  padding: 30px;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.stat-icon.blue {
+  background: #dbeafe;
+  color: #3b82f6;
+}
+.stat-icon.green {
+  background: #dcfce7;
+  color: #22c55e;
+}
+.stat-icon.orange {
+  background: #ffedd5;
+  color: #f59e0b;
+}
+.stat-icon.red {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.stat-number {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.stat-label {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Tables */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+.status-badge.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+.status-badge.warning {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+.btn-action {
+  background: none;
+  border: 1px solid #e2e8f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #64748b;
+}
+.btn-action:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}

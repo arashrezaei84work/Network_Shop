@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}contact-us{%endblock %} 
+{% block content %}
+<div id="contact-page" class="container">
+  <div class="bg">
+    <div class="row">
+      <div class="container">
+        <div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">
+          <h2 class="title text-center">تمـاس با مـا</h2>
+          <div id="gmap" class="contact-map">
+            <img src="{% static 'images/home/Map.jpg' %}" alt="Map" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="contact-info">
+          <h2 class="title text-center">اطلاعات تماس</h2>
+          <address>
+            <p><strong>فروشگاه کارزیبا</strong></p>
+            <p>ایران - استان قم - شهر قم</p>
+            <p>
+              بلوار امین، خیابان گلستان شرقی، کوچه گلستان ۱۲، بن‌بست دوم، پلاک
+              ۳۸، واحد ۴
+            </p>
+            <p>کد پستی: ۳۷۱۵۶۷۸۹۱۲</p>
+            <p>تلفن: ۰۲۵-۳۶۵۴۱۲۳۴</p>
+            <p>موبایل: ۰۹۱۲۲۵۴۱۲۳۴</p>
+            <p style="font-family: tahoma; direction: rtl">
+              ایمیل: info@karziba.ir
+            </p>
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/#contact-page-->
+{% include "shop/chat-bot.html" %}
+{% endblock %}

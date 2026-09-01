@@ -1,0 +1,25 @@
+<div class="price-range">
+    <h2>فیلتـر قیمـت</h2>
+    <div class="well">
+        <form method="get" action="{% url 'shop:shop' %}" id="price-filter-form">
+            <input
+                type="text"
+                class="span2"
+                name="price_range"
+                value=""
+                data-slider-min="0"
+                data-slider-max="10000000"
+                data-slider-step="50000"
+                data-slider-value="[0,10000000]"
+                id="sl2"
+            ><br />
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; font-weight: bold;">
+                <span>10.000.000 ریال</span>
+                <span>0 ریال</span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px; background: #0D3B66; border: none;">
+                اعمال فیلتر
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Network Shop{% endblock %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/price-range.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+  </head>
+  
+  <body>
+    <!-- Header -->
+    <header id="header" class="modern-header sticky-header">
+      <div class="container">
+        <div class="header-flex-container">
+
+          <!-- Left -->
+          <div class="header-left">
+            {% if user.is_authenticated %}
+              <span class="login-btn">
+                سلام {{ user.username }}
+              </span>
+
+              | <a href="{% url 'shop:user-panel' %}" class="login-btn">
+                  پنل کاربری
+                </a>
+
+              {% if user.is_superuser %}
+                | <a href="/admin/" class="login-btn">
+                    پنل ادمین
+                  </a>
+              {% endif %}
+
+              | <a href="{% url 'shop:logout' %}" class="login-btn">
+                  خروج
+                </a>
+            {% else %}
+              <a href="{% url 'shop:login' %}" class="login-btn">
+                ورود / ثبت‌نام
+              </a>
+            {% endif %}
+          </div>
+
+          <!-- Right -->
+          <div class="header-right">
+            <nav class="main-navigation" id="main-nav">
+              <ul class="nav-links">
+                <li><a href="{% url 'shop:home' %}">خانه</a></li>
+
+                <li class="has-dropdown">
+                  <a href="#">فروشگاه <i class="fa fa-angle-down"></i></a>
+                  <ul class="dropdown-content">
+                    <li><a href="{% url 'shop:shop' %}">فهرست محصولات</a></li>
+                    <li><a href="{% url 'shop:cart' %}">سبد خرید</a></li>
+                    <li><a href="{% url 'shop:checkout' %}">پرداخت</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'shop:user-panel' %}">
+                        پنل کاربری
+                      </a></li>
+
+                    {% if user.is_superuser %}
+                      <li><a href="/admin/" >
+                          پنل ادمین
+                        </a></li>
+                    {% endif %}
+                      <li><a href="{% url 'shop:logout' %}" > خروج </a>  
+                      </li>
+
+
+                    {% else %}
+                      <li><a href="{% url 'shop:login' %}">ورود / ثبت‌نام</a></li>
+                    {% endif %}
+                  </ul>
+                </li>
+
+                <li><a href="{% url 'shop:About' %}">درباره ما</a></li>
+                <li><a href="{% url 'shop:contact-us' %}">تماس با ما</a></li>
+              </ul>
+            </nav>
+
+            <div class="logo">
+              <a href="{% url 'shop:home' %}">
+                <span class="logo-net">NETWORK</span>
+                <span class="logo-shop">SHOP</span>
+              </a>
+            </div>
+
+            <button class="menu-toggle" id="mobile-menu-btn">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <!-- Content -->
+    <div class="container my-4">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="modern-footer">
+      <div class="container">
+        <div class="row footer-widgets">
+
+          <div class="col-sm-4">
+            <div class="footer-logo">
+              <span class="logo-net">NETWORK</span>
+              <span class="logo-shop">SHOP</span>
+            </div>
+            <p class="footer-desc">
+              ارائه دهنده پیشرفته‌ترین تجهیزات شبکه و زیرساخت‌های مخابراتی
+            </p>
+            <div class="social-networks">
+              <h2 class="title text-center">شبکـه های اجتـماعی:</h2>
+              <span class="socials-share share">
+                <ul>
+                  <a href="#">
+                    <li>
+                      <label>بلـه</label>
+                      <img src="{% static 'images/product-details/Bale.png' %}" />
+                    </li>
+                  </a>
+                  <a href="#">
+                    <li>
+                      <label>سـروش</label>
+                      <img src="{% static 'images/product-details/Soroush.png' %}" />
+                    </li>
+                  </a>
+                  <a href="#">
+                    <li>
+                      <label>اینستاگرام</label>
+                      <img src="{% static 'images/product-details/Instagram.png' %}" />
+                    </li>
+                  </a>
+                </ul>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <h4 class="widget-title">لینک‌های سریع</h4>
+            <ul class="footer-menu">
+              <li><a href="{% url 'shop:home' %}">صفحه اصلی</a></li>
+              <li><a href="{% url 'shop:shop' %}">فروشگاه</a></li>
+              <li><a href="{% url 'shop:login' %}">ثبت‌نام/ورود</a></li>
+            </ul>
+          </div>
+
+          <div class="col-sm-3">
+            <h4 class="widget-title">خدمات مشتریان</h4>
+            <ul class="footer-menu">
+              <li><a href="#">قوانین و مقررات</a></li>
+              <li><a href="{% url 'shop:contact-us' %}">تماس با ما</a></li>
+              <li><a href="{% url 'shop:About' %}">درباره ما</a></li>
+
+            </ul>
+          </div>
+
+          <div class="col-sm-3">
+            <h4 class="widget-title">ارتباط با ما</h4>
+            <p><i class="fa fa-map-marker"></i> قم، ایران</p>
+            <p><i class="fa fa-phone"></i> ۰۲۵-۱۲۳۴۵۶۷۸</p>
+            <p><i class="fa fa-envelope"></i> info@networkshop.ir</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                کلیه حقوق مادی و معنوی این سایت مربوط به
+                <strong><a href="{% url 'shop:home' %}">network shop</a> </strong> است.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </footer>
+
+    <!-- JS -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'js/chatbot.js' %}"></script>
+    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'js/price-range.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const dropdowns = document.querySelectorAll('.has-dropdown > a');
+
+          dropdowns.forEach(link => {
+              link.addEventListener('click', function (e) {
+                  if (window.innerWidth <= 991) {
+                      e.preventDefault();
+
+                      const parent = this.parentElement;
+
+                      document.querySelectorAll('.has-dropdown').forEach(item => {
+                          if (item !== parent) item.classList.remove('active');
+                      });
+
+                      parent.classList.toggle('active');
+                  }
+              });
+          });
+      });
+    </script>
+  </body>
+</html>

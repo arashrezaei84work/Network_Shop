@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+<div class="container" style="max-width:900px;margin:40px auto">
+
+    <h2 style="font-weight:900;margin-bottom:30px">
+        سفارش‌های من
+    </h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div style="
+                background:#fff;
+                border-radius:18px;
+                padding:20px;
+                margin-bottom:20px;
+                box-shadow:0 10px 25px rgba(0,0,0,.05);
+                border:1px solid #f1f5f9;
+            ">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong>
+                        سفارش #{{ order.id }}
+                    </strong>
+
+                    {% if order.status == 'paid' %}
+                        <span style="color:#16a34a;font-weight:700">
+                            پرداخت شده
+                        </span>
+                    {% else %}
+                        <span style="color:#f97316;font-weight:700">
+                            در انتظار پرداخت
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div style="margin-top:10px;color:#64748b;font-size:14px">
+                    تاریخ: {{ order.created_at|date:"Y/m/d - H:i" }}
+                </div>
+
+                <hr style="margin:15px 0">
+
+                {% for item in order.items.all %}
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                        <span>
+                            {{ item.product.name }} × {{ item.quantity }}
+                        </span>
+                        <span>
+                            {{ item.quantity|mul:item.price }} ریال
+                        </span>
+                    </div>
+                {% endfor %}
+
+                <hr style="margin:15px 0">
+
+                <div style="display:flex;justify-content:space-between;font-weight:900">
+                    <span>مبلغ نهایی</span>
+                    <span>{{ order.get_total_price }} ریال</span>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div style="
+            background:#fff;
+            padding:30px;
+            border-radius:16px;
+            text-align:center;
+            color:#64748b;
+        ">
+            هنوز سفارشی ثبت نکرده‌اید
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

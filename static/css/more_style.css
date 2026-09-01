@@ -1,0 +1,227 @@
+تنظیمات کلی برای مدرن‌سازی
+body {
+  font-family: "Tahoma", sans-serif;
+  background-color: #fff;
+}
+.product-image-wrapper {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+  background: #fff;
+}
+.product-image-wrapper:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.btn.get {
+  background: #3b82f6;
+  border-radius: 25px;
+  padding: 10px 25px;
+  transition: 0.3s;
+}
+
+/* استایل اختصاصی بخش Why Us */
+.why-us-section {
+  padding: 60px 0;
+  background: #fff;
+  margin-top: 40px;
+}
+.section-header {
+  margin-bottom: 50px;
+}
+.section-header h2 {
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  padding-bottom: 15px;
+}
+.section-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #3b82f6;
+}
+
+.feature-card {
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  transition: 0.4s;
+  margin-bottom: 20px;
+}
+.feature-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 15px 30px rgba(254, 152, 15, 0.1);
+}
+.active-card {
+  background: linear-gradient(145deg, #ffffff, #c3c5c6);
+  border-bottom: 4px solid #3b82f6;
+}
+.icon-box {
+  width: 70px;
+  height: 70px;
+  background: #c3c5c6;
+  color: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 30px;
+}
+.feature-card h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #222;
+}
+.feature-card p {
+  color: #777;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+
+/* --- Info Architecture Styles --- */
+.info-architecture {
+    padding: 80px 0;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.display-flex-center {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.promo-content h2 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 50px;
+    color: #334155;
+    margin-bottom: 20px;
+}
+
+.promo-content h2 span {
+    color: #3b82f6; /* استفاده از آبی فایل شما */
+}
+
+.top-badge {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.promo-content p {
+    font-size: 16px;
+    color: #64748b;
+    line-height: 28px;
+    margin-bottom: 30px;
+}
+
+/* Stats */
+.promo-stats {
+    display: flex;
+    gap: 40px;
+}
+
+.stat-item .number {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.stat-item .label {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* Image Decoration */
+.promo-image-holder {
+    position: relative;
+    padding: 20px;
+}
+
+.floating-anim {
+    animation: float 6s ease-in-out infinite;
+    z-index: 2;
+    position: relative;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Why Us Cards */
+.section-divider {
+    margin: 60px 0;
+    border-color: #f1f5f9;
+}
+
+.modern-subtitle {
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: #334155;
+}
+
+.info-card {
+    text-align: center;
+    padding: 40px 25px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #f1f5f9;
+    transition: 0.3s ease;
+}
+
+.info-card:hover {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    border-color: #3b82f6;
+}
+
+.info-card.highlighted {
+    background: #f8fafc;
+    border-bottom: 3px solid #3b82f6;
+}
+
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: #3b82f6;
+    color: #fff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 24px;
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+.info-card h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.info-card p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 24px;
+}
+
+

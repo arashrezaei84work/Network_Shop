@@ -1,0 +1,250 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Login{%endblock %}
+{% block content %}
+<style>
+
+  .modern-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 450px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #1a1a1a; 
+    color: #fff;
+    border: 1px solid #333;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  }
+
+  .modern-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #3b82f6; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 30px; 
+  }
+
+  .modern-title::before, .modern-title::after {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    right: 0px; /* RTL */
+    background-color: #3b82f6;
+  }
+
+  .modern-title::after {
+    animation: pulse 1s linear infinite;
+  }
+
+  .modern-message {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 10px;
+  }
+
+  .modern-flex {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .modern-form label {
+    position: relative;
+    width: 100%;
+  }
+
+  .modern-form label .modern-input {
+    background-color: #2a2a2a;
+    color: #fff;
+    width: 100%;
+    padding: 20px 15px 10px 15px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.4);
+    border-radius: 12px;
+    font-family: "BYekan", Tahoma, sans-serif !important;
+  }
+
+  .modern-form label .modern-input + span {
+    color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    right: 15px; /* RTL */
+    top: 15px;
+    font-size: 0.9em;
+    transition: 0.3s ease;
+    pointer-events: none;
+  }
+
+  .modern-form label .modern-input:focus + span,
+  .modern-form label .modern-input:not(:placeholder-shown) + span {
+    color: #3b82f6;
+    top: 5px;
+    font-size: 0.75em;
+    font-weight: 600;
+  }
+
+  .modern-submit {
+    border: none;
+    outline: none;
+    padding: 12px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #3b82f6;
+    transition: .3s ease;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+
+  .modern-submit:hover {
+    background-color: #00a811;
+    transform: translateY(-2px);
+  }
+
+  .status-msg.error {
+    color: #ff4d4d;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(0.9); opacity: 1; }
+    to { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* Responsive Fix */
+  @media (max-width: 768px) {
+      .modern-flex { flex-direction: column; }
+      .modern-form { padding: 20px; }
+  }
+
+
+   
+  .modern-form-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 0;
+  }
+
+
+  .modern-form-wrapper {
+      margin-bottom: 30px;
+      width: 100%;
+  }
+
+  
+  .modern-or {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      background: #3b82f6;
+      color: #fff;
+      border-radius: 50%;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(254, 152, 15, 0.3);
+      position: relative;
+      z-index: 2;
+  }
+
+  @media (max-width: 991px) {
+      .modern-form-row {
+          flex-direction: column; 
+          align-items: center;
+      }
+
+      .col-md-5, .col-md-1 {
+          width: 100%; 
+          max-width: 450px; 
+      }
+
+      .divider-container {
+          margin: -10px 0 20px 0; 
+          order: 2; 
+      }
+      
+      .col-md-5:first-child { order: 1; }
+      .col-md-5:last-child { order: 3; }
+  }
+</style>
+<div class="container">
+    <div class="row modern-form-row">
+        
+        <div class="col-xs-12 col-md-5">
+            <div class="modern-form-wrapper">
+                <form class="modern-form" method="post" action="{% url 'shop:login' %}">
+                    {% csrf_token %}
+                    <p class="modern-title">ورود به حساب</p>
+                    <p class="modern-message">خوش آمدید! اطلاعات خود را وارد کنید.</p>
+                    
+                    <label>
+                        <input class="modern-input" type="text" name="username" required="" placeholder=" ">
+                        <span>نام کاربری</span>
+                    </label>
+                    
+                    <label>
+                        <input class="modern-input" type="password" name="password" required="" placeholder=" ">
+                        <span>رمز عبور</span>
+                    </label>
+                    
+                    <button type="submit" class="modern-submit">ورود</button>
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="status-msg error">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-1 text-center divider-container">
+            <span class="modern-or">یا</span>
+        </div>
+
+        <div class="col-xs-12 col-md-5">
+            <div class="modern-form-wrapper">
+                <form class="modern-form" method="post" action="{% url 'shop:signup' %}">
+                    {% csrf_token %}
+                    <p class="modern-title">ثبت‌نام سریع</p>
+                    
+                    <div class="modern-flex">
+                        <label>
+                            <input class="modern-input" type="text" name="username" required="" placeholder=" ">
+                            <span>نام کاربری</span>
+                        </label>
+                        <label>
+                            <input class="modern-input" type="email" name="email" required="" placeholder=" ">
+                            <span>ایمیل</span>
+                        </label>
+                    </div>
+
+                    <label>
+                        <input class="modern-input" type="password" name="password1" required="" placeholder=" ">
+                        <span>رمز عبور</span>
+                    </label>
+                    
+                    <label>
+                        <input class="modern-input" type="password" name="password2" required="" placeholder=" ">
+                        <span>تکرار رمز عبور</span>
+                    </label>
+                    
+                    <button type="submit" class="modern-submit">تایید و عضویت</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--/form-->
+
+{% endblock %}

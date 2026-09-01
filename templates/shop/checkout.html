@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block content %}
+<style>
+.checkout-summary div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.final-total {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.payment-options {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.address-section {
+     background: var(--card-bg); backdrop-filter: blur(10px);
+     border-radius: 20px; padding: 25px; margin-top: 30px;
+    border: 1px solid #fff; box-shadow: var(--shadow);
+}
+.address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.modern-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; outline: none; }
+
+</style>
+<div class="checkout-container">
+
+  <h2>تکمیل سفارش</h2>
+
+  {% for item in items %}
+    <div class="checkout-item">
+      <div>
+        <strong>{{ item.product.name }}</strong>
+        <div>تعداد: {{ item.quantity }}</div>
+      </div>
+      <div class="price">
+        {{ item.quantity|mul:item.price }} ریال
+      </div>
+    </div>
+  {% endfor %}
+
+  <hr>
+
+  <div class="checkout-summary">
+    <div>
+      <span>جمع سبد خرید:</span>
+      <span>{{ items_total }} ریال</span>
+    </div>
+    <div>
+      <span>هزینه ارسال:</span>
+      <span>{{ shipping_cost }} ریال</span>
+    </div>
+    <div class="final-total">
+      <strong>مبلغ نهایی:</strong>
+      <strong>{{ final_total }} ریال</strong>
+    </div>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+
+      <h4 style="font-weight:800;margin-top:20px">انتخاب آدرس</h4>
+
+      {% if addresses %}
+          {% for address in addresses %}
+          <label style="display:block;background:#f8fafc;padding:15px;border-radius:12px;margin-bottom:10px;cursor:pointer">
+              <input type="radio" name="address_id" value="{{ address.id }}" required>
+
+              <strong>{{ address.full_name }}</strong>
+              <div style="font-size:13px;color:#555">
+                  {{ address.state }}، {{ address.city }} – {{ address.address }}
+              </div>
+              <div style="font-size:12px;color:#888">
+                  {{ address.phone }}
+              </div>
+          </label>
+          {% endfor %}
+      {% else %}
+          <div style="margin-top:15px;background:#fff3cd;padding:15px;border-radius:12px">
+              هیچ آدرسی ثبت نشده است.
+              <br>
+              <a href="{% url 'shop:user-addresses' %}" style="color:#2563eb;font-weight:bold">
+                  افزودن آدرس جدید
+              </a>
+          </div>
+      {% endif %}
+
+
+    <div class="payment-options">
+      <label>
+        <input type="radio" name="payment_method" value="bank">
+        پرداخت مستقیم بانکی
+      </label>
+
+      <label>
+        <input type="radio" name="payment_method" value="zarinpal">
+        پرداخت از طریق زرین‌پال
+      </label>
+
+      <label>
+        <input type="radio" name="payment_method" value="wallet">
+        پرداخت از طریق کیف پول
+      </label>
+
+      <button type="submit" class="btn-primary">
+        ثبت و پرداخت نهایی
+      </button>
+    </div>
+  </form>
+
+</div>{% endblock %}

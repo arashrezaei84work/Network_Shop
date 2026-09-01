@@ -1,0 +1,68 @@
+{% load static %}
+<style>
+  .bot-message a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 5px 0;
+    border-bottom: 1px dashed #2563eb;
+  }
+  .bot-message a:hover {
+      color: #1e40af;
+  }
+
+
+    #chatBotContainer {
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  #chatBotContainer .chat-bot-toggle,
+  #chatBotContainer.active .chat-bot-window {
+    pointer-events: auto;
+  }
+
+
+
+</style>
+<!-- Floating Chat Bot -->
+<div id="chatBotContainer" class="chat-bot-closed">
+  <!-- Chat Button -->
+  <div id="chatBotToggle" class="chat-bot-toggle">
+    <i class="fa fa-comments fa-2x"></i>
+    <span class="chat-notification" id="chatNotification" style="display: none"
+      >1</span
+    >
+  </div>
+
+  <!-- Chat Window -->
+  <div id="chatBotWindow" class="chat-bot-window">
+    <div class="chat-header">
+      <div class="chat-title">
+        <i class="fa fa-android"></i> راهنمای خرید تجهیزات شبکه
+      </div>
+      <div class="chat-close" id="chatClose">
+        <i class="fa fa-times"></i>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="bot-message">
+        <p>
+          سلام 👋<br />به فروشگاه شبکه خوش آمدید!<br />چه تجهیز شبکه‌ای نیاز
+          دارید؟ (مثلاً روتر، سوئیچ، کابل و ...)
+        </p>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input
+        type="text"
+        id="chatInput"
+        placeholder="پیام خود را بنویسید..."
+        autocomplete="off"
+      />
+      <button id="chatSend"><i class="fa fa-paper-plane">ارسال</i></button>
+    </div>
+  </div>
+</div>
+
