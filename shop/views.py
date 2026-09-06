@@ -1,13 +1,10 @@
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.db import transaction
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 import json
@@ -118,96 +115,12 @@ def checkout(request):
     })
 
 
-def login_view(request):
-    if request.method == 'POST':
-        user = authenticate(
-            request,
-            username=request.POST.get('username'),
-            password=request.POST.get('password')
-        )
-
-        if user:
-            auth_login(request, user)
-            if user.groups.filter(name='admin').exists():
-                return redirect('/admin/')
-            return redirect('shop:user-panel')
-
-        messages.error(request, 'Invalid username or password')
-
-    return render(request, 'shop/login.html')
 
 
-def logout_view(request):
-    auth_logout(request)
-    return redirect('shop:home')
 
 
-def signup(request):
-    if request.method == 'POST':
-        if request.POST.get('password1') != request.POST.get('password2'):
-            messages.error(request, 'Passwords do not match')
-            return redirect('shop:login')
-
-        if User.objects.filter(username=request.POST.get('username')).exists():
-            messages.error(request, 'Username already exists')
-            return redirect('shop:login')
-
-        user = User.objects.create_user(
-            username=request.POST.get('username'),
-            email=request.POST.get('email'),
-            password=request.POST.get('password1')
-        )
-
-        user.groups.add(Group.objects.get(name='user'))
-        auth_login(request, user)
-        return redirect('shop:home')
-
-    return redirect('shop:login')
 
 
-@login_required(login_url='shop:login')
-def user_panel(request):
-    user = request.user
-
-    orders = Order.objects.filter(user=user)
-    paid_orders = orders.filter(status=Order.STATUS_PAID)
-    pending_orders = orders.filter(status=Order.STATUS_PENDING)
-
-    addresses = user.addresses.all()  # from Address model
-
-    context = {
-        "orders_count": orders.count(),
-        "paid_orders_count": paid_orders.count(),
-        "pending_orders_count": pending_orders.count(),
-        "last_orders": orders[:5],
-        "addresses": addresses,
-    }
-
-    return render(request, "shop/user_panel.html", context)
-
-
-@login_required(login_url='shop:login')
-def user_profile(request):
-    if request.method == "POST":
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, "رمز عبور با موفقیت تغییر کرد")
-            return redirect("shop:user-profile")
-        else:
-          
-            messages.error(request, "لطفاً خطاهای زیر را برطرف کنید.")
-    else:
-        form = PasswordChangeForm(request.user)
-
-    return render(request, "shop/user_profile.html", {"form": form})
-
-
-@login_required
-def user_orders(request):
-    orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
-    return render(request, 'shop/parts/user_orders.html', {'orders': orders})
 
 
 @require_POST
@@ -303,39 +216,6 @@ def about(request):
 
 
 
-@login_required
-def user_addresses(request):
-    if request.method == "POST":
-        Address.objects.create(
-            user=request.user,
-            full_name=request.POST.get("full_name"),
-            phone=request.POST.get("phone"),
-            state=request.POST.get("state"),
-            city=request.POST.get("city"),
-            address=request.POST.get("address"),
-        )
-        return redirect("shop:user-addresses")
-
-    addresses = Address.objects.filter(user=request.user).order_by("-id")
-
-    return render(request, "shop/parts/user_addresses.html", {
-        "addresses": addresses
-    })
-
-@login_required
-def add_address(request):
-    if request.method == "POST":
-        Address.objects.create(
-            user=request.user,
-            full_name=request.POST.get("full_name"),
-            phone=request.POST.get("phone"),
-            state=request.POST.get("state"),
-            city=request.POST.get("city"),
-            address=request.POST.get("address"),
-        )
-        return redirect("shop:user-addresses")
-
-    return render(request, "shop/parts/add_address.html")
 
 
 @login_required

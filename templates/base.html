@@ -29,7 +29,7 @@
                 سلام {{ user.username }}
               </span>
 
-              | <a href="{% url 'shop:user-panel' %}" class="login-btn">
+              | <a href="{% url 'users:user-panel' %}" class="login-btn">
                   پنل کاربری
                 </a>
 
@@ -39,11 +39,11 @@
                   </a>
               {% endif %}
 
-              | <a href="{% url 'shop:logout' %}" class="login-btn">
+              | <a href="{% url 'users:logout' %}" class="login-btn">
                   خروج
                 </a>
             {% else %}
-              <a href="{% url 'shop:login' %}" class="login-btn">
+              <a href="{% url 'users:login' %}" class="login-btn">
                 ورود / ثبت‌نام
               </a>
             {% endif %}
@@ -62,7 +62,7 @@
                     <li><a href="{% url 'shop:cart' %}">سبد خرید</a></li>
                     <li><a href="{% url 'shop:checkout' %}">پرداخت</a></li>
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'shop:user-panel' %}">
+                    <li><a href="{% url 'users:user-panel' %}">
                         پنل کاربری
                       </a></li>
 
@@ -71,12 +71,12 @@
                           پنل ادمین
                         </a></li>
                     {% endif %}
-                      <li><a href="{% url 'shop:logout' %}" > خروج </a>  
+                      <li><a href="{% url 'users:logout' %}" > خروج </a>  
                       </li>
 
 
                     {% else %}
-                      <li><a href="{% url 'shop:login' %}">ورود / ثبت‌نام</a></li>
+                      <li><a href="{% url 'users:login' %}">ورود / ثبت‌نام</a></li>
                     {% endif %}
                   </ul>
                 </li>
@@ -156,7 +156,7 @@
             <ul class="footer-menu">
               <li><a href="{% url 'shop:home' %}">صفحه اصلی</a></li>
               <li><a href="{% url 'shop:shop' %}">فروشگاه</a></li>
-              <li><a href="{% url 'shop:login' %}">ثبت‌نام/ورود</a></li>
+              <li><a href="{% url 'users:login' %}">ثبت‌نام/ورود</a></li>
             </ul>
           </div>
 

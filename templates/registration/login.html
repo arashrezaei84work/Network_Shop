@@ -181,7 +181,7 @@
         
         <div class="col-xs-12 col-md-5">
             <div class="modern-form-wrapper">
-                <form class="modern-form" method="post" action="{% url 'shop:login' %}">
+                <form class="modern-form" method="post" action="{% url 'users:login' %}">
                     {% csrf_token %}
                     <p class="modern-title">ورود به حساب</p>
                     <p class="modern-message">خوش آمدید! اطلاعات خود را وارد کنید.</p>
@@ -213,7 +213,7 @@
 
         <div class="col-xs-12 col-md-5">
             <div class="modern-form-wrapper">
-                <form class="modern-form" method="post" action="{% url 'shop:signup' %}">
+                <form class="modern-form" method="post" action="{% url 'users:signup' %}">
                     {% csrf_token %}
                     <p class="modern-title">ثبت‌نام سریع</p>
                     

@@ -8,15 +8,6 @@ urlpatterns = [
     path('', index, name='home'),
 
 
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('signup/', signup, name='signup'),
-
-    path('panel/', user_panel, name='user-panel'),
-    path('panel/orders/', user_orders, name='user-orders'),
-    path("panel/addresses/", user_addresses, name="user-addresses"),
-    path("panel/addresses/add/", add_address, name="add-address"),
-    path('panel/profile/', user_profile, name='user-profile'),
 
     path('chatbot-api/', chatbot_api, name='chatbot_api'),
 
