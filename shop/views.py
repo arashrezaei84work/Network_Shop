@@ -16,10 +16,6 @@ def base(request):
     return render(request, 'base.html')
 
 
-def index(request):
-    products = Product.objects.filter(is_available=True).order_by('-id')[:3]
-    return render(request, 'shop/index.html', {'products': products})
-
 
 def shop_view(request):
     products = Product.objects.filter(is_available=True)
@@ -205,17 +201,6 @@ def decrease_item(request, item_id):
         item.delete()
 
     return redirect('shop:cart')
-
-
-def contact_us(request):
-    return render(request, 'shop/contact_us.html')
-
-
-def about(request):
-    return render(request, 'shop/About.html')
-
-
-
 
 
 @login_required

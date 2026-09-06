@@ -5,7 +5,6 @@ app_name = 'shop'
 
 urlpatterns = [
     path('base/', base, name='base'),
-    path('', index, name='home'),
 
 
 
@@ -31,7 +30,5 @@ urlpatterns = [
     # path('vote-review/', vote_review, name='vote_review'),
     # path('review/<int:review_id>/dislike/', dislike_review, name='dislike_review'),
 
-    path('contact-us/', contact_us, name='contact-us'),
-    path('About/', about, name='About'),
 ]
 
