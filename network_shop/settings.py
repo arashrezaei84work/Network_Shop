@@ -11,27 +11,52 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# ====== .ENV FILE LOADING ======
+# Load variables from .env file
+env_file = BASE_DIR / '.env'
+if env_file.exists():
+    with open(env_file) as f:
+        for line in f:
+            # Skip empty lines and comments
+            line = line.strip()
+            if line and not line.startswith('#'):
+                # Parse KEY=VALUE
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    key = key.strip()
+                    value = value.strip()
+                    # Remove quotes if present
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1]
+                    elif value.startswith("'") and value.endswith("'"):
+                        value = value[1:-1]
+                    os.environ[key] = value
 
+
+# ====== SECRET KEY ======
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v(&7dsjd(5^xb=!dd1s&zy3(c)6b_!t-nj%hb0d$3w#=-cvc*u'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-CHANGE-ME-IN-PRODUCTION')
 
+
+# ====== DEBUG MODE ======
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+
+# ====== ALLOWED HOSTS ======
+ALLOWED_HOSTS_STR = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',')]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,8 +81,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'network_shop.urls'
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -73,6 +96,7 @@ TEMPLATES = [
         },
     },
 ]
+
 WSGI_APPLICATION = 'network_shop.wsgi.application'
 
 
@@ -129,8 +153,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-LOGIN_URL = 'shop:login'
-LOGIN_REDIRECT_URL = 'shop:home'
-LOGOUT_REDIRECT_URL = 'shop:home'
-
-
+# ====== LOGIN & REDIRECT URLS ======
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'website:home'
+LOGOUT_REDIRECT_URL = 'website:home'
