@@ -10,7 +10,28 @@ from shop.models import Order, Address
 
 
 def signup(request):
-    pass
+    """
+    Handle user registration (signup).
+    GET: Display signup form
+    POST: Process form and create new user
+    """
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Log the user in immediately after signup
+            auth_login(request, user)
+            messages.success(request, f"خوش آمدید {user.username}! حساب شما با موفقیت ایجاد شد.")
+            return redirect('users:user-panel')
+        else:
+            # Form has errors; pass them to template
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 

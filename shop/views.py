@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.utils.html import escape  
 import json
 
 from .models import Product, Category, Order, OrderItem, Address, Review
@@ -96,9 +97,8 @@ def checkout(request):
         order.state = address.state
         order.city = address.city
         order.address = address.address
-        order.status = Order.STATUS_PAID
         order.save()
-
+        messages.info(request, "سفارش شما ثبت شد. لطفاً درخواست پرداخت صبر کنید.")
         return redirect("shop:order_success")
 
     return render(request, "shop/checkout.html", {
@@ -276,15 +276,15 @@ def chatbot_api(request):
             reviews = Review.objects.filter(product=product).order_by('-created_at')[:3]
             
             if reviews.exists():
-                reply = f"💬 <b>آخرین نظرات برای {product.name}:</b><br><br>"
+                reply = f"💬 <b>آخرین نظرات برای {escape(product.name)}:</b><br><br>"
                 for rev in reviews:
-                    reply += f"👤 <b>{rev.user.username}:</b> {rev.comment[:100]}...<br>"
+                    reply += f"👤 <b>{escape(rev.user.username)}:</b> {escape(rev.comment[:100])}...<br>"
                     reply += f"🗓️ <small>{rev.created_at.strftime('%Y-%m-%d')}</small><br><hr>"
-                
-                reply += f"<a href='/shop/product/{product.slug}/'>مشاهده همه نظرات</a>"
+                        
+                reply += f"<a href='/shop/product/{escape(product.slug)}/'>مشاهده همه نظرات</a>"
                 return JsonResponse({"reply": reply})
             else:
-                return JsonResponse({"reply": f"هنوز نظری برای <b>{product.name}</b> ثبت نشده است."})
+                return JsonResponse({"reply": f"هنوز نظری برای <b>{escape(product.name)}</b> ثبت نشده است."})
 
     #  (logic)
     category_keywords = {
@@ -306,8 +306,10 @@ def chatbot_api(request):
     if products.exists():
         reply = "🔍 این محصولات پیشنهاد می‌شوند:<br><br>"
         for p in products:
-            reply += f"🔹 <b>{p.name}</b><br>💰 قیمت: {p.price:,} ریال<br><a href='/shop/product/{p.slug}/' target='_blank'>مشاهده و خرید</a><br><br>"
+            reply += f"🔹 <b>{escape(p.name)}</b><br>💰 قیمت: {p.price:,} ریال<br><a href='/shop/product/{escape(p.slug)}/' target='_blank'>مشاهده و خرید</a><br><br>"
+
     else:
         reply = "😕 متوجه نشدم. می‌توانید درباره محصولات (مثل سوییچ یا روتر) بپرسید یا نام محصول را برای دیدن نظرات وارد کنید."
 
     return JsonResponse({"reply": reply})
+

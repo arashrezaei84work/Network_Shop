@@ -8,7 +8,7 @@ urlpatterns = [
 
 
 
-    path('chatbot-api/', chatbot_api, name='chatbot_api'),
+    # path('chatbot-api/', chatbot_api, name='chatbot_api'),
 
 
     path('shop/', shop_view, name='shop'),
